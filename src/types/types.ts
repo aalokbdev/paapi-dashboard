@@ -52,3 +52,13 @@ export interface GeographicSalesData {
   country: string;
   sales: number;
 }
+
+export interface DashboardData {
+  monthlySalesData?: any[];
+  userEngagementData?: any[];
+  productPerformanceData?: any[];
+  geographicSalesData?: any[];
+  performanceMetrics?: {
+    [key: string]: number;
+  };
+}

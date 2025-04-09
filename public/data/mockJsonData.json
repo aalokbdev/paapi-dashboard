@@ -1,0 +1,47 @@
+{
+  "monthlySalesData": [
+    { "month": "Jan", "revenue": 4000, "profit": 2400 },
+    { "month": "Feb", "revenue": 3000, "profit": 1398 },
+    { "month": "Mar", "revenue": 2000, "profit": 9800 },
+    { "month": "Apr", "revenue": 2780, "profit": 3908 },
+    { "month": "May", "revenue": 1890, "profit": 4800 },
+    { "month": "Jun", "revenue": 2390, "profit": 3800 },
+    { "month": "Jul", "revenue": 3490, "profit": 4300 },
+    { "month": "Aug", "revenue": 4000, "profit": 2400 },
+    { "month": "Sep", "revenue": 3000, "profit": 1398 },
+    { "month": "Oct", "revenue": 2000, "profit": 9800 },
+    { "month": "Nov", "revenue": 2780, "profit": 3908 },
+    { "month": "Dec", "revenue": 1890, "profit": 4800 }
+  ],
+  
+  "userEngagementData": [
+    { "platform": "Facebook", "users": 4000 },
+    { "platform": "Instagram", "users": 3000 },
+    { "platform": "Twitter", "users": 2000 },
+    { "platform": "LinkedIn", "users": 2780 },
+    { "platform": "TikTok", "users": 1890 }
+  ],
+  
+  "productPerformanceData": [
+    { "product": "Laptop", "sales": 4000, "margin": 24 },
+    { "product": "Smartphone", "sales": 3000, "margin": 18 },
+    { "product": "Tablet", "sales": 2000, "margin": 32 },
+    { "product": "Smartwatch", "sales": 2780, "margin": 22 },
+    { "product": "Headphones", "sales": 1890, "margin": 15 }
+  ],
+  
+  "geographicSalesData": [
+    { "country": "USA", "sales": 4000 },
+    { "country": "China", "sales": 3000 },
+    { "country": "India", "sales": 2000 },
+    { "country": "Germany", "sales": 2780 },
+    { "country": "UK", "sales": 1890 }
+  ],
+  
+  "performanceMetrics": {
+    "totalRevenue": 45000,
+    "averageMargin": 22.5,
+    "newCustomers": 1200,
+    "activeUsers": 5600
+  }
+}

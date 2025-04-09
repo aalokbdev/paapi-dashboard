@@ -36,6 +36,8 @@ import {
   ChartTab,
   breakpoints,
 } from "./styles";
+import { fetchDashboardData } from "@/lib/hooks/useDataFetch";
+import { DashboardData } from "@/types/types";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(10px); }
@@ -93,6 +95,7 @@ const Chart: React.FC = () => {
   const [dateMenuOpen, setDateMenuOpen] = useState(false);
 
   const [activeView, setActiveView] = useState("all");
+  const [apiData, setApiData] = useState<DashboardData | null>(null);
 
   const [chartConfigs, setChartConfigs] = useState<{
     [key: string]: ChartConfig;
@@ -157,6 +160,36 @@ const Chart: React.FC = () => {
       optionsOpen: false,
       favorite: false,
     },
+    salesBubble: {
+      id: "salesBubble",
+      expanded: false,
+      optionsOpen: false,
+      favorite: false,
+    },
+    regionalSales: {
+      id: "regionalSales",
+      expanded: false,
+      optionsOpen: false,
+      favorite: false,
+    },
+    quarterlyTrends: {
+      id: "quarterlyTrends",
+      expanded: false,
+      optionsOpen: false,
+      favorite: false,
+    },
+    channelDistribution: {
+      id: "channelDistribution",
+      expanded: false,
+      optionsOpen: false,
+      favorite: false,
+    },
+    profitabilityAnalysis: {
+      id: "profitabilityAnalysis",
+      expanded: false,
+      optionsOpen: false,
+      favorite: false,
+    },
   });
 
   const toggleChartExpansion = (chartId: string) => {
@@ -215,6 +248,16 @@ const Chart: React.FC = () => {
         return newConfigs;
       });
     };
+    const fetchData = async () => {
+      try {
+        const res = await fetchDashboardData();
+        setApiData(res);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchData();
 
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
@@ -484,6 +527,119 @@ const Chart: React.FC = () => {
               {renderChartOptionsMenu("detailedPerformance")}
             </ChartHeader>
             <StackedBarChart data={monthlySalesData} />
+          </ChartContainer>
+        )}
+        {apiData && getVisibleCharts().includes("salesBubble") && (
+          <ChartContainer $expanded={chartConfigs.salesBubble?.expanded}>
+            <ChartHeader>
+              <ChartTitleArea>
+                <ChartTitle>Sales Performance Bubble Chart</ChartTitle>
+                <ChartDescription>
+                  Multi-dimensional view of sales, margin, and volume
+                </ChartDescription>
+              </ChartTitleArea>
+              {renderChartControls("salesBubble")}
+              {renderChartOptionsMenu("salesBubble")}
+            </ChartHeader>
+            <ScatterChart
+              data={
+                apiData.productPerformanceData?.length
+                  ? apiData.productPerformanceData
+                  : productPerformanceData
+              }
+            />
+          </ChartContainer>
+        )}
+
+        {apiData && getVisibleCharts().includes("regionalSales") && (
+          <ChartContainer $expanded={chartConfigs.regionalSales?.expanded}>
+            <ChartHeader>
+              <ChartTitleArea>
+                <ChartTitle>Regional Sales Comparison</ChartTitle>
+                <ChartDescription>
+                  Comparative analysis of sales by region
+                </ChartDescription>
+              </ChartTitleArea>
+              {renderChartControls("regionalSales")}
+              {renderChartOptionsMenu("regionalSales")}
+            </ChartHeader>
+            <BarChart
+              data={
+                apiData.geographicSalesData?.length
+                  ? apiData.geographicSalesData
+                  : geographicSalesData
+              }
+            />
+          </ChartContainer>
+        )}
+
+        {apiData && getVisibleCharts().includes("quarterlyTrends") && (
+          <ChartContainer $expanded={chartConfigs.quarterlyTrends?.expanded}>
+            <ChartHeader>
+              <ChartTitleArea>
+                <ChartTitle>Quarterly Revenue Trends</ChartTitle>
+                <ChartDescription>
+                  Revenue and profit analysis by fiscal quarter
+                </ChartDescription>
+              </ChartTitleArea>
+              {renderChartControls("quarterlyTrends")}
+              {renderChartOptionsMenu("quarterlyTrends")}
+            </ChartHeader>
+            <LineChart
+              data={
+                apiData.monthlySalesData?.length
+                  ? apiData.monthlySalesData
+                  : monthlySalesData
+              }
+            />
+          </ChartContainer>
+        )}
+
+        {apiData && getVisibleCharts().includes("channelDistribution") && (
+          <ChartContainer
+            $expanded={chartConfigs.channelDistribution?.expanded}
+          >
+            <ChartHeader>
+              <ChartTitleArea>
+                <ChartTitle>User Channel Distribution</ChartTitle>
+                <ChartDescription>
+                  Distribution of users across different platforms
+                </ChartDescription>
+              </ChartTitleArea>
+              {renderChartControls("channelDistribution")}
+              {renderChartOptionsMenu("channelDistribution")}
+            </ChartHeader>
+            <PieChart
+              data={
+                apiData.userEngagementData?.length
+                  ? apiData.userEngagementData
+                  : userEngagementData
+              }
+            />
+          </ChartContainer>
+        )}
+
+        {apiData && getVisibleCharts().includes("profitabilityAnalysis") && (
+          <ChartContainer
+            $expanded={chartConfigs.profitabilityAnalysis?.expanded}
+          >
+            <ChartHeader>
+              <ChartTitleArea>
+                <ChartTitle>Product Profitability Analysis</ChartTitle>
+                <ChartDescription>
+                  Detailed profitability breakdown by product
+                </ChartDescription>
+              </ChartTitleArea>
+              {renderChartControls("profitabilityAnalysis")}
+              {renderChartOptionsMenu("profitabilityAnalysis")}
+            </ChartHeader>
+            <ComposedChart
+              data={
+                apiData.productPerformanceData?.length
+                  ? apiData.productPerformanceData
+                  : productPerformanceData
+              }
+            />
           </ChartContainer>
         )}
       </ChartsGrid>
